@@ -1,4 +1,5 @@
 import React from 'react'
+import {Redirect} from 'react-router-dom'
 import { connect } from 'react-redux'
 import {handleAddTweet} from '../actions/tweets'
 
@@ -6,13 +7,14 @@ class NewTweet extends React.Component{
 
     state = {
         text:'',
+        toHome:false
     }
 
     handleChange = (e) => {
         const text = e.target.value
 
         this.setState(() => ({
-            text
+            text,
         }))
     }
 
@@ -26,13 +28,18 @@ class NewTweet extends React.Component{
 
         console.log('New Text ', text)
         this.setState(() => ({
-            text: ''
+            text: '',
+            toHome: id ? false : true
         }))
     }
 
     render(){
-        const { text } = this.state
+        const { text, toHome } = this.state
         const tweetLeft = 280 - text.length
+
+        if(toHome === true){
+            return <Redirect to='/' />
+        }
 
         return(
             <div>
